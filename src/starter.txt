@@ -1,0 +1,59 @@
+import { useReducer, useState } from "react";
+
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'increment':
+      let newCount = state.count + 1;
+      return { ...state, count: newCount }
+    case 'decrement':
+      return { ...state, count: state.count - 1 }
+    case 'light':
+      return { ...state, theme: 'light' }
+    case 'dark':
+      return { ...state, theme: 'dark' }
+    case 'updateText':
+      return { ...state, name: action.payLoad }
+    default:
+      return state;
+  }
+}
+
+
+
+function App() {
+
+  let [state, dispatch] = useReducer(reducer, { count: 0, theme: 'light', name: 'Jimmy' });
+
+
+  return (
+    <div className={`container ${state.theme}`}>
+      <div className="row">
+        <button onClick={() => dispatch({ type: 'decrement'})} className="action">-</button>
+        {state.count}
+        <button onClick={() => dispatch({ type: 'increment'})} className="action">+</button>
+
+      </div>
+
+      <div className="row">
+        <button className="action" onClick={(e) => {
+          if (state.theme === 'light') {
+            dispatch({ type: 'dark'})
+          } else {
+            dispatch({ type: 'light'})
+          }
+        }}>Update Theme</button>
+        Current Theme: {state.theme}
+      </div>
+
+      <div className="row">
+        <input type="text" onChange={(e) => {
+          dispatch({ type: 'updateText', payLoad: e.target.value });
+        }} />
+        <p>Hello there, {state.name}</p>
+      </div>
+    </div>
+  );
+}
+
+export default App;
