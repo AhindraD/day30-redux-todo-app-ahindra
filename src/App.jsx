@@ -6,7 +6,6 @@ import { useDispatch } from 'react-redux/es/hooks/useDispatch';
 import { toggleTheme } from './slices/themeSlice';
 
 const ACTIONS = {
-  THEME: 'update-theme',
   LIST: 'add-to-list',
   DONE: 'mark-task-complete',
   DEL: 'clear-task',
@@ -15,13 +14,6 @@ const ACTIONS = {
 
 function reducer(state, action) {
   switch (action.type) {
-
-    case ACTIONS.THEME:
-      if (state.theme === 'light') {
-        return { ...state, theme: 'dark' }
-      } else {
-        return { ...state, theme: 'light' }
-      }
 
     case ACTIONS.LIST:
       let task = action.payload;
@@ -93,7 +85,7 @@ function App() {
   let { theme } = useSelector(state => state.theme);
   const dispatchREDUX = useDispatch();
 
-  let [state, dispatch] = useReducer(reducer, { theme: 'dark', list: [], pending: [], complete: [] });
+  let [state, dispatch] = useReducer(reducer, { list: [], pending: [], complete: [] });
   let [filter, setFilter] = useState('list');
 
   function markDone(ID) {
@@ -107,20 +99,20 @@ function App() {
   }
 
   return (
-    <div className={`container ${state.theme}-cont`}>
+    <div className={`container ${theme}-cont`}>
       <div className="cover-pic"></div>
-      <main className={`card ${state.theme}`}>
+      <main className={`card ${theme}`}>
 
-        <div className={`header ${state.theme}`}>
+        <div className={`header ${theme}`}>
           <p className="title">TODO</p>
           <button className="mode" onClick={() => {
-            dispatch({ type: ACTIONS.THEME });
+            dispatchREDUX(toggleTheme());
           }}>
-            <img className="icon" src={state.theme === 'light' ? '/images/icon-moon.svg' : '/images/icon-sun.svg'} alt="" />
+            <img className="icon" src={theme === 'light' ? '/images/icon-moon.svg' : '/images/icon-sun.svg'} alt="" />
           </button>
         </div>
 
-        <input type="text" placeholder="Create a new todo" className={`input-bar ${state.theme}`} onKeyDown={(e) => {
+        <input type="text" placeholder="Create a new todo" className={`input-bar ${theme}`} onKeyDown={(e) => {
           if (e.key === 'Enter') {
             dispatch({ type: ACTIONS.LIST, payload: e.target.value });
             e.target.value = '';
@@ -128,11 +120,11 @@ function App() {
         }}
         />
 
-        <section className={`list ${state.theme}`}>
+        <section className={`list ${theme}`}>
           {state[filter].map((elem) => { return <TodoList key={elem.ID} ID={elem.ID} task={elem.task} isComplete={elem.isComplete} handleDone={markDone} handleDel={clearTask} /> })}
         </section>
 
-        <footer className={`filters ${state.theme}-foot`}>
+        <footer className={`filters ${theme}-foot`}>
           <p className="left">{`${state.pending.length} tasks left`}</p>
 
           <button className="all" onClick={() => {
