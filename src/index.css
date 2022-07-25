@@ -196,16 +196,15 @@ body {
 }
 
 .light-foot button {
-  background-color: var(--bgL);
   color: #a7a4af;
 }
 
 .dark-foot button {
-  background-color: var(--bgD);
   color: #565773;
 }
 
 .filters button {
+  background-color: transparent;
   font-size: 14px;
   border: none;
 }

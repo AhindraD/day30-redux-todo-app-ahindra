@@ -1,8 +1,9 @@
 import { useReducer, useState } from "react";
 import TodoList from "./components/TodoList";
 
-//'/images/icon-sun.svg'
-//{state.theme === 'light' ? '/images/icon-sun.svg' : '/images/icon-moon.svg'}
+import { useSelector } from 'react-redux/es/exports';
+import { useDispatch } from 'react-redux/es/hooks/useDispatch';
+import { toggleTheme } from './slices/themeSlice';
 
 const ACTIONS = {
   THEME: 'update-theme',
@@ -89,6 +90,8 @@ function reducer(state, action) {
 
 
 function App() {
+  let { theme } = useSelector(state => state.theme);
+  const dispatchREDUX = useDispatch();
 
   let [state, dispatch] = useReducer(reducer, { theme: 'dark', list: [], pending: [], complete: [] });
   let [filter, setFilter] = useState('list');
