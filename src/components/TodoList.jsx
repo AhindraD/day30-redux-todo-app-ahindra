@@ -5,10 +5,10 @@ export default function TodoList(props) {
         <div className="task-indiv">
             <button className={`task-done ${props.isComplete ? 'active-state' : ''}`} onClick={() => {
                 if (!props.isComplete) {
-                    props.handleDone(props.ID)
+                    props.handleDone(props.ID);
                 }
                 else{
-                    
+                    props.handleUnDone(props.ID);
                 }
             }
             }>
