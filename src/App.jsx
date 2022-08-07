@@ -4,7 +4,7 @@ import TodoList from "./components/TodoList";
 import { useSelector } from 'react-redux/es/exports';
 import { useDispatch } from 'react-redux/es/hooks/useDispatch';
 import { toggleTheme } from './slices/themeSlice';
-import { add, markDone, deleteTask, deleteCompleted } from "./slices/listSlice";
+import { add, markDone, markUnDone, deleteTask, deleteCompleted } from "./slices/listSlice";
 
 
 function App() {
@@ -17,6 +17,11 @@ function App() {
   function mark(ID) {
     console.log(ID);
     dispatchREDUX(markDone(ID))
+  }
+
+  function unMark(ID) {
+    console.log(ID);
+    dispatchREDUX(markUnDone(ID))
   }
 
   function clearTask(ID) {
@@ -47,7 +52,7 @@ function App() {
         />
 
         <section className={`list ${theme}`}>
-          {tasks[filter].map((elem) => { return <TodoList key={elem.ID} ID={elem.ID} task={elem.task} isComplete={elem.isComplete} handleDone={mark} handleDel={clearTask} /> })}
+          {tasks[filter].map((elem) => { return <TodoList key={elem.ID} ID={elem.ID} task={elem.task} isComplete={elem.isComplete} handleDone={mark} handleDel={clearTask} handleUnDone={unMark} /> })}
         </section>
 
         <footer className={`filters ${theme}-foot`}>

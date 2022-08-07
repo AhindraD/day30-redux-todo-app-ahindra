@@ -7,6 +7,9 @@ export default function TodoList(props) {
                 if (!props.isComplete) {
                     props.handleDone(props.ID)
                 }
+                else{
+                    
+                }
             }
             }>
                 <img src='/images/icon-check.svg' alt="" />

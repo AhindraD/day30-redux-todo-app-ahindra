@@ -21,6 +21,7 @@ const listSlice = createSlice({
                 let currID = state.list[i].ID;
                 if (currID === action.payload) {
                     state.list[i].isComplete = true;
+
                     state.complete.push(state.list[i]);
                     break;
                 }
@@ -29,6 +30,26 @@ const listSlice = createSlice({
                 let currID = state.pending[i].ID;
                 if (currID === action.payload) {
                     state.pending.splice(i, 1);
+                    break;
+                }
+            }
+        },
+
+        markUnDone: (state, action) => {
+            let addObj = {};
+            for (let i = 0; i < state.list.length; i++) {
+                let currID = state.list[i].ID;
+                if (currID === action.payload) {
+                    state.list[i].isComplete = false;
+
+                    state.pending.push(state.list[i]);
+                    break;
+                }
+            }
+            for (let i = 0; i < state.complete.length; i++) {
+                let currID = state.complete[i].ID;
+                if (currID === action.payload) {
+                    state.complete.splice(i, 1);
                     break;
                 }
             }
@@ -58,7 +79,7 @@ const listSlice = createSlice({
             }
         },
 
-        deleteCompleted:(state,action)=>{
+        deleteCompleted: (state, action) => {
             for (let i = 0; i < state.list.length; i++) {
                 if (state.list[i].isComplete) {
                     state.list.splice(i, 1);
@@ -70,6 +91,6 @@ const listSlice = createSlice({
     }
 });
 
-export const {add,markDone,deleteTask,deleteCompleted } = listSlice.actions
+export const { add, markDone, markUnDone, deleteTask, deleteCompleted } = listSlice.actions
 
 export default listSlice.reducer
