@@ -36,7 +36,6 @@ const listSlice = createSlice({
         },
 
         markUnDone: (state, action) => {
-            let addObj = {};
             for (let i = 0; i < state.list.length; i++) {
                 let currID = state.list[i].ID;
                 if (currID === action.payload) {
